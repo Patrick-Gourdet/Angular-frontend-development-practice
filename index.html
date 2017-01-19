@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/paper/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body ng-app="directoryApp">
+    <div class="container">
+      <div class="row" >
+        <h1>UF Directory App</h1>
+	
+      </div>
+      <div class="row" ng-controller="ListingsController">
+        <div class="col-md-6">
+          <div class="input-group" id="searchBar">
+            <span class="input-group-addon" id="sizing-addon1"><span class="glyphicon glyphicon-search"></span></span>
+            <input type="text" class="form-control" placeholder="Search" ng-model="searchFilterText">
+          </div>
+          <div class="tableWrapper">
+            <table class="table table-hover">
+              <tr>
+                <th>Building Name</th>
+                <th></th>
+              </tr>
+              <tr ng-repeat="listing in listings | filter:searchFilterText" ng-click="showDetails($index)" ng-class="{info: $index === selectedIndex}">
+                <td>{{listing.name}}</td>
+                <td><button type="button" class="btn btn-danger btn-xs" ng-click="deleteListing($index)">Delete</button></td>
+              </tr>
+            </table>
+          </div>
+
+          <br /><br /><br />
+
+        <div class="row" style ='background-color: #2ba6cb'>
+        <div class="col-md-12">
+          <div class="jumbotron">
+            <h2>Detailed Information</h2>
+	   
+            <div class="row">
+              <div class="col-md-4">
+                <h3>{{detailedInfo.name}}</h3>
+              </div>
+              <div class="col-md-4">
+                <h3>{{detailedInfo.code}}</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <h4>Coordinates</h4>
+		<div></div>
+                <div class="row">
+                  <div class="col-md-8">
+                    <strong>latitude:</strong> {{detailedInfo.coordinates.latitude}}
+                  </div>
+                  <div class="col-md-12">
+                    <strong>longitude:</strong> {{detailedInfo.coordinates.longitude}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <h4>address:</h4>
+                <div class="row">
+                  <div class="col-md-12">
+                    {{detailedInfo.address}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+	<br /><br /><br />
+
+          <form ng-submit="addListing()" ng-model ="newListing">
+            <div class="form-group">
+              <label for="addListingName">Name</label>
+              <input type="text" ng-model="newListing.name" id="addListingName" class="form-control" placeholder="Name">
+            </div>
+            <div class="form-group">
+              <label for="addListingCode">Code</label>
+              <input type="text" ng-model="newListing.code" id="addListingCode" class="form-control" placeholder="Code">
+            </div>
+            <div class="form-group">
+              <label for="addListingAddress">Address</label>
+              <input type="text" ng-model="newListing.address" id="addListingAddress" class="form-control" placeholder="Address">
+            </div>
+            <div class="form-group">
+              <label for="addListingLatitude">Latitude</label>
+              <input type="number" ng-model="newListing.coordinates.latitude" id="addListingLatitude" class="form-control" placeholder="Latitude">
+            </div>
+            <div class="form-group">
+              <label for="addListingLongitude">Longitude</label>
+              <input type="number" ng-model="newListing.coordinates.longitude" id="addListingLongitude" class="form-control" placeholder="longitude">
+            </div>
+            <button type="submit" class="btn btn-success">Submit</button>
+	    </form>	
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <script src="https://code.angularjs.org/1.4.3/angular.js"></script>
+    <script src="app.js"></script>
+    <script src="listingController.js"></script>
+    <script src="listingFactory.js"></script>
+  </body>
+</html>
+
